@@ -1,0 +1,119 @@
+# Inventory Management System
+
+inventory = {}
+
+
+def add_product():
+    product_id = input("Enter Product ID: ")
+    name = input("Enter Product Name: ")
+    quantity = int(input("Enter Quantity: "))
+    price = float(input("Enter Price: "))
+
+    inventory[product_id] = {
+        "name": name,
+        "quantity": quantity,
+        "price": price
+    }
+
+    print("Product added successfully!")
+
+
+def view_inventory():
+    if not inventory:
+        print("Inventory is empty.")
+        return
+
+    print("\n----- Inventory -----")
+    print("ID\tName\t\tQuantity\tPrice")
+
+    for product_id, product in inventory.items():
+        print(
+            product_id,
+            "\t",
+            product["name"],
+            "\t\t",
+            product["quantity"],
+            "\t\t₹",
+            product["price"]
+        )
+
+
+def update_stock():
+    product_id = input("Enter Product ID: ")
+
+    if product_id in inventory:
+        quantity = int(input("Enter new quantity: "))
+        inventory[product_id]["quantity"] = quantity
+        print("Stock updated successfully!")
+    else:
+        print("Product not found.")
+
+
+def sell_product():
+    product_id = input("Enter Product ID: ")
+
+    if product_id in inventory:
+        quantity = int(input("Enter quantity to sell: "))
+
+        if quantity <= inventory[product_id]["quantity"]:
+            inventory[product_id]["quantity"] -= quantity
+
+            total = quantity * inventory[product_id]["price"]
+
+            print("Sale completed successfully!")
+            print("Total amount: ₹", total)
+        else:
+            print("Not enough stock available.")
+    else:
+        print("Product not found.")
+
+
+def search_product():
+    product_id = input("Enter Product ID to search: ")
+
+    if product_id in inventory:
+        product = inventory[product_id]
+
+        print("\nProduct Found")
+        print("ID:", product_id)
+        print("Name:", product["name"])
+        print("Quantity:", product["quantity"])
+        print("Price: ₹", product["price"])
+    else:
+        print("Product not found.")
+
+
+# Main Menu
+while True:
+
+    print("\n===== INVENTORY MANAGEMENT SYSTEM =====")
+    print("1. Add Product")
+    print("2. View Inventory")
+    print("3. Update Stock")
+    print("4. Sell Product")
+    print("5. Search Product")
+    print("6. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        add_product()
+
+    elif choice == "2":
+        view_inventory()
+
+    elif choice == "3":
+        update_stock()
+
+    elif choice == "4":
+        sell_product()
+
+    elif choice == "5":
+        search_product()
+
+    elif choice == "6":
+        print("Thank you for using Inventory Management System!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
